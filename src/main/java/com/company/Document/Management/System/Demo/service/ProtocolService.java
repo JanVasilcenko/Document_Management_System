@@ -96,10 +96,6 @@ public class ProtocolService {
         return protocolRepository.updateByIdReturnCountAffected(protocolId, protocolChangeStateDto.getProtocolState()) > 0;
     }
 
-    private List<Long> getDocumentsWithDifferentProtocol(List<Document> documents, Long protocolId) {
-        return documents.stream().filter(d -> !d.isAssignedToProtocol(protocolId)).map(Document::getDocumentId).toList();
-    }
-
     private List<Long> getDocumentsWithProtocolAssigned(List<Document> documents) {
         return documents.stream().filter(Document::hasProtocol).map(Document::getDocumentId).toList();
     }
