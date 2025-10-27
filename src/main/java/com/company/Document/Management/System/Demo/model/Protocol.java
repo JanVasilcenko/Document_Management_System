@@ -48,6 +48,22 @@ public class Protocol {
         return protocolId;
     }
 
+    public void setProtocolId(Long protocolId) {
+        this.protocolId = protocolId;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public ProtocolState getProtocolState() {
+        return protocolState;
+    }
+
     public void setProtocolState(ProtocolState protocolState) {
         this.protocolState = protocolState;
     }
