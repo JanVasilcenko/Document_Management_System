@@ -2,10 +2,7 @@ package com.company.Document.Management.System.Demo.model;
 
 import com.company.Document.Management.System.Demo.model.dto.DocumentDto;
 import com.company.Document.Management.System.Demo.model.dto.DocumentUpdateDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +15,9 @@ public class Document {
     private String createdBy;
     private LocalDateTime createdAt;
     private DocumentType type;
+    @ManyToOne
+    @JoinColumn(name = "protocolId")
+    private Protocol protocol;
 
     protected Document() {
     }
@@ -51,6 +51,18 @@ public class Document {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public boolean hasProtocol() {
+        return protocol != null;
+    }
+
+    public boolean isAssignedToProtocol(Long protocolId) {
+        return hasProtocol() && protocol.getProtocolId().equals(protocolId);
+    }
+
+    public void setProtocol(Protocol protocol) {
+        this.protocol = protocol;
     }
 
     public void updatePresentParametersFromUpdateDto(DocumentUpdateDto documentUpdateDto) {
