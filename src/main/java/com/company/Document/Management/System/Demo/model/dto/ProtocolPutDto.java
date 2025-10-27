@@ -8,8 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public class ProtocolPutDto {
-    @NotBlank(message = "Author of protocol must be provided")
-    private String createdBy;
     @NotNull(message = "Protocol state is required")
     private ProtocolState protocolState;
     @NotEmpty(message = "Protocol must hold at least one document")
@@ -18,18 +16,9 @@ public class ProtocolPutDto {
     public ProtocolPutDto() {
     }
 
-    public ProtocolPutDto(String createdBy, ProtocolState protocolState, List<Long> documentIds) {
-        this.createdBy = createdBy;
+    public ProtocolPutDto(ProtocolState protocolState, List<Long> documentIds) {
         this.protocolState = protocolState;
         this.documentIds = documentIds;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
     }
 
     public ProtocolState getProtocolState() {

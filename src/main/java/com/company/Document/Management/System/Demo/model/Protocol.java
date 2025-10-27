@@ -21,6 +21,15 @@ public class Protocol {
     public Protocol() {
     }
 
+    public Protocol(LocalDateTime createdAt, ProtocolState protocolState, Set<Document> documents) {
+        this.createdAt = createdAt;
+        this.protocolState = protocolState;
+        this.documents = documents;
+        for (Document document : this.documents) {
+            document.setProtocol(this);
+        }
+    }
+
     public Protocol(String createdBy, LocalDateTime createdAt, ProtocolState protocolState, Set<Document> documents) {
         this.createdBy = createdBy;
         this.createdAt = createdAt;

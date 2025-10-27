@@ -11,6 +11,7 @@ import com.company.Document.Management.System.Demo.model.dto.ProtocolPutDto;
 import com.company.Document.Management.System.Demo.persistence.DocumentRepository;
 import com.company.Document.Management.System.Demo.persistence.ProtocolRepository;
 import com.company.Document.Management.System.Demo.service.ProtocolService;
+import com.company.Document.Management.System.Demo.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,6 +34,9 @@ public class ProtocolServiceTest {
 
     @Mock
     private ProtocolRepository protocolRepository;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private ProtocolService protocolService;
@@ -125,7 +129,6 @@ public class ProtocolServiceTest {
 
         ProtocolPutDto protocolPutDto = mock(ProtocolPutDto.class);
         when(protocolPutDto.getDocumentIds()).thenReturn(List.of(1L));
-        when(protocolPutDto.getCreatedBy()).thenReturn("New");
         when(protocolPutDto.getProtocolState()).thenReturn(ProtocolState.PREPARE_FOR_SHIPMENT);
 
         when(documentRepository.findAllById(List.of(1L))).thenReturn(List.of(documentOne));
@@ -140,7 +143,6 @@ public class ProtocolServiceTest {
         assertThat(documentTwo.hasProtocol()).isFalse();
         assertThat(documentOne.hasProtocol()).isTrue();
 
-        assertThat(result.getCreatedBy()).isEqualTo("New");
         assertThat(result.getProtocolState()).isEqualTo(ProtocolState.PREPARE_FOR_SHIPMENT);
         verify(protocolRepository).save(existing);
     }
@@ -217,7 +219,6 @@ public class ProtocolServiceTest {
     private Protocol protocol(long id) {
         Protocol protocol = new Protocol();
         protocol.setProtocolId(id);
-        protocol.setCreatedBy("Test");
         protocol.setCreatedAt(LocalDateTime.now());
         protocol.setProtocolState(ProtocolState.CANCELLED);
         return protocol;
@@ -228,7 +229,6 @@ public class ProtocolServiceTest {
         document.setDocumentId(id);
         document.setName("Name");
         document.setCreatedAt(LocalDateTime.now());
-        document.setCreatedBy("Test");
         return document;
     }
 }

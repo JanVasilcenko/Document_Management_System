@@ -3,7 +3,6 @@ package com.company.Document.Management.System.Demo.model.dto;
 import com.company.Document.Management.System.Demo.model.Document;
 import com.company.Document.Management.System.Demo.model.Protocol;
 import com.company.Document.Management.System.Demo.model.ProtocolState;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDateTime;
@@ -11,8 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class ProtocolCreateDto {
-    @NotBlank(message = "Author of protocol must be provided")
-    private String createdBy;
     @NotEmpty(message = "Protocol should have at least one document")
     private List<Long> documentIds;
     private ProtocolState protocolState;
@@ -20,18 +17,9 @@ public class ProtocolCreateDto {
     public ProtocolCreateDto() {
     }
 
-    public ProtocolCreateDto(String createdBy, List<Long> documentIds, ProtocolState protocolState) {
-        this.createdBy = createdBy;
+    public ProtocolCreateDto(List<Long> documentIds, ProtocolState protocolState) {
         this.documentIds = documentIds;
         this.protocolState = protocolState;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
     }
 
     public List<Long> getDocumentIds() {
@@ -51,6 +39,6 @@ public class ProtocolCreateDto {
     }
 
     public Protocol toProtocol(List<Document> documents){
-        return new Protocol(createdBy, LocalDateTime.now(), protocolState, new HashSet<>(documents));
+        return new Protocol(LocalDateTime.now(), protocolState, new HashSet<>(documents));
     }
 }

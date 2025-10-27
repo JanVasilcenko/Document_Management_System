@@ -24,9 +24,13 @@ public class ProtocolService {
     @Autowired
     private final DocumentRepository documentRepository;
 
-    public ProtocolService(ProtocolRepository protocolRepository, DocumentRepository documentRepository) {
+    @Autowired
+    private final UserService userService;
+
+    public ProtocolService(ProtocolRepository protocolRepository, DocumentRepository documentRepository, UserService userService) {
         this.protocolRepository = protocolRepository;
         this.documentRepository = documentRepository;
+        this.userService = userService;
     }
 
     public Protocol getProtocol(Long protocolId) {
@@ -52,6 +56,7 @@ public class ProtocolService {
         }
 
         Protocol newProtocol = protocolCreateDto.toProtocol(documents);
+        newProtocol.setCreatedBy(userService.getCurrentUsername());
         return protocolRepository.save(newProtocol);
     }
 
@@ -81,7 +86,6 @@ public class ProtocolService {
         }
 
         protocol.addDocumentsInBulk(requestedDocuments, true);
-        protocol.setCreatedBy(protocolPutDto.getCreatedBy());
         protocol.setProtocolState(protocolPutDto.getProtocolState());
 
         return protocolRepository.save(protocol);

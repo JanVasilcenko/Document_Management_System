@@ -13,10 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class DocumentService {
     @Autowired
     private final DocumentRepository documentRepository;
+    @Autowired
+    private final UserService userService;
     private static final String DOCUMENT_NOT_FOUND_ERROR_MESSAGE = "Document with specified id does not exist";
 
-    public DocumentService(DocumentRepository documentRepository) {
+    public DocumentService(DocumentRepository documentRepository, UserService userService) {
         this.documentRepository = documentRepository;
+        this.userService = userService;
     }
 
     public Document getDocument(Long documentId){
@@ -25,14 +28,15 @@ public class DocumentService {
 
     public Document createDocument(DocumentCreateDto documentCreateDto) {
         Document newDocument = documentCreateDto.toDocument();
+        newDocument.setCreatedBy(userService.getCurrentUsername());
         return documentRepository.save(newDocument);
     }
 
     @Transactional
-    public void updateDocument(Long updatedDocumentId, DocumentUpdateDto documentUpdateDto) {
+    public Document updateDocument(Long updatedDocumentId, DocumentUpdateDto documentUpdateDto) {
         Document existingDocument = documentRepository.findById(updatedDocumentId).orElseThrow(() -> new NotFoundException(DOCUMENT_NOT_FOUND_ERROR_MESSAGE));
         existingDocument.updatePresentParametersFromUpdateDto(documentUpdateDto);
-        documentRepository.save(existingDocument);
+        return documentRepository.save(existingDocument);
     }
 
     @Transactional

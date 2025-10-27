@@ -10,17 +10,14 @@ import java.time.LocalDateTime;
 public class DocumentCreateDto {
     @NotBlank(message = "Name is required to create a document")
     private String name;
-    @NotBlank(message = "Author is required to create a document")
-    private String createdBy;
     @NotNull(message = "Document type is required to create a document")
     private DocumentType type;
 
     public DocumentCreateDto() {
     }
 
-    public DocumentCreateDto(String name, String createdBy, DocumentType type) {
+    public DocumentCreateDto(String name, DocumentType type) {
         this.name = name;
-        this.createdBy = createdBy;
         this.type = type;
     }
 
@@ -32,13 +29,6 @@ public class DocumentCreateDto {
         this.name = name;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
 
     public DocumentType getType() {
         return type;
@@ -49,6 +39,6 @@ public class DocumentCreateDto {
     }
 
     public Document toDocument() {
-        return new Document(name, createdBy, LocalDateTime.now(), type);
+        return new Document(name, LocalDateTime.now(), type);
     }
 }

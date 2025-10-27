@@ -7,6 +7,7 @@ import com.company.Document.Management.System.Demo.model.dto.DocumentCreateDto;
 import com.company.Document.Management.System.Demo.model.dto.DocumentUpdateDto;
 import com.company.Document.Management.System.Demo.persistence.DocumentRepository;
 import com.company.Document.Management.System.Demo.service.DocumentService;
+import com.company.Document.Management.System.Demo.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +26,9 @@ import static org.mockito.Mockito.*;
 public class DocumentServiceTest {
     @Mock
     private DocumentRepository documentRepository;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private DocumentService documentService;
@@ -66,7 +70,7 @@ public class DocumentServiceTest {
     @Test
     void createDocument_Success(){
         //Arrange
-        DocumentCreateDto documentCreateDto = new DocumentCreateDto("NewDocument", "John", DocumentType.PDF);
+        DocumentCreateDto documentCreateDto = new DocumentCreateDto("NewDocument", DocumentType.PDF);
         Document toSave = documentCreateDto.toDocument();
         Document saved = new Document(toSave.getName(), toSave.getCreatedBy(), toSave.getCreatedAt(), toSave.getType());
         saved.setDocumentId(999L);

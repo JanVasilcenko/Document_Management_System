@@ -45,10 +45,10 @@ public class DocumentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity editDocument(@PathVariable("id") Long documentId,
+    public ResponseEntity<DocumentDto> editDocument(@PathVariable("id") Long documentId,
                                        @RequestBody @Valid DocumentUpdateDto documentUpdateDto) {
-        documentService.updateDocument(documentId, documentUpdateDto);
-        return ResponseEntity.ok().build();
+        Document updated = documentService.updateDocument(documentId, documentUpdateDto);
+        return ResponseEntity.ok(updated.toDocumentDto());
     }
 
     @DeleteMapping("/{id}")

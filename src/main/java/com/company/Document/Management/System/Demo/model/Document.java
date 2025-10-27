@@ -22,6 +22,12 @@ public class Document {
     public Document() {
     }
 
+    public Document(String name, LocalDateTime createdAt, DocumentType type) {
+        this.name = name;
+        this.createdAt = createdAt;
+        this.type = type;
+    }
+
     public Document(String name, String createdBy, LocalDateTime createdAt, DocumentType type) {
         this.name = name;
         this.createdBy = createdBy;
