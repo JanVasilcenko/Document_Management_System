@@ -33,6 +33,26 @@ public class Document {
         return documentId;
     }
 
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public DocumentType getType() {
+        return type;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     public void updatePresentParametersFromUpdateDto(DocumentUpdateDto documentUpdateDto) {
         if (documentUpdateDto.getName() != null && !documentUpdateDto.getName().trim().isEmpty()) {
             name = documentUpdateDto.getName();
