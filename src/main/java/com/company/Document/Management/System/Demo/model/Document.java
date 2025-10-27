@@ -1,11 +1,13 @@
 package com.company.Document.Management.System.Demo.model;
 
+import com.company.Document.Management.System.Demo.model.dto.DocumentDto;
+import com.company.Document.Management.System.Demo.model.dto.DocumentUpdateDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 @Entity
 public class Document {
@@ -14,12 +16,13 @@ public class Document {
     private Long documentId;
     private String name;
     private String createdBy;
-    private SimpleDateFormat createdAt;
+    private LocalDateTime createdAt;
     private DocumentType type;
 
-    protected Document(){};
+    protected Document() {
+    }
 
-    public Document(String name, String createdBy, SimpleDateFormat createdAt, DocumentType type) {
+    public Document(String name, String createdBy, LocalDateTime createdAt, DocumentType type) {
         this.name = name;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
@@ -30,39 +33,17 @@ public class Document {
         return documentId;
     }
 
-    public void setDocumentId(Long documentId) {
-        this.documentId = documentId;
+    public void updatePresentParametersFromUpdateDto(DocumentUpdateDto documentUpdateDto) {
+        if (documentUpdateDto.getName() != null && !documentUpdateDto.getName().trim().isEmpty()) {
+            name = documentUpdateDto.getName();
+        }
+
+        if (documentUpdateDto.getType() != null) {
+            type = documentUpdateDto.getType();
+        }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public SimpleDateFormat getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(SimpleDateFormat createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public DocumentType getType() {
-        return type;
-    }
-
-    public void setType(DocumentType type) {
-        this.type = type;
+    public DocumentDto toDocumentDto() {
+        return new DocumentDto(documentId, name, type, createdAt, createdBy);
     }
 }
