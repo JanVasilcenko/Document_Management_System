@@ -3,7 +3,8 @@ This is a small project in Spring Boot that leverages REST api and H2 in memory 
 
 ## How to start
 1. Navigate to the root of the project.
-2. Run this command: mvnw spring-boot:run
+2. Open cmd
+3. Run this command: mvnw spring-boot:run
 
 If there are problems with locating the JDK you can download it on this link: https://adoptium.net/temurin/releases/?version=21
 
